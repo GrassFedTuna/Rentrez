@@ -60,11 +60,20 @@ tot_bp <- seq_bp_count %>% #Calculating the total number of base pairs in each s
 
 (GC_content <- (num_GC$GC / tot_bp$bp) * 100) #Calculating GC content in percent
 (GC_content <- sub("(\\d{2}).+", "\\1%", GC_content)) #Adding percent symbol to GC content
-(seq_id <- gsub("[^H*]", "", dat$Name))
 print(data.frame(num_GC$seq, GC_content))
 ```
 
-```{r}
+Creating a table with sequence ID and GC content
 
-```
+Sequence ID  | GC COntent
+------|---------|------
+HQ433692.1 | 44%
+HQ433694.1 | 44%
+HQ433691.1 | 44%
+
+
+Embedding photo of ![Borrelia burgdorferi](./bacteria.jpg)
+
+Here's a link to its [wikipedia page](https://en.wikipedia.org/wiki/Borrelia_burgdorferi)
+
 
