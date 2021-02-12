@@ -1,0 +1,48 @@
+---
+title: "Sequence_analyzing"
+author: "Cameron MacPhail"
+date: "11/02/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Importing packages I may need
+```{r}
+library(tidyverse)
+```
+
+Importing data
+```{r}
+dat <- read.csv("./Sequences.csv")
+```
+
+Determining the number of each base pair in each sequence
+```{r}
+num_nucleo <- c()
+bp <- rep(c("A", "T", "C", "G"), 3)
+seq <- c(rep("Sequence 1", 4), rep("Sequence 2", 4), rep("Sequence 3", 4))
+
+count <- 1
+
+for (i in length(dat)) {
+
+num_nucleo <- c(num_nucleo, nchar(gsub("[^A]", "", dat$Sequence[count])))
+num_nucleo <- c(num_nucleo, nchar(gsub("[^T]", "", dat$Sequence[count])))
+num_nucleo <- c(num_nucleo, nchar(gsub("[^G]", "", dat$Sequence[count])))
+num_nucleo <- c(num_nucleo, nchar(gsub("[^C]", "", dat$Sequence[count])))
+
+count <- count + 1
+
+}
+
+
+```
+
+
+```{r}
+num_nucleo <- nchar(c(num_nucleo, gsub("[^A]", "", seq)))
+```
+
