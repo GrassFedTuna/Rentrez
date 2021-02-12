@@ -19,7 +19,7 @@ Importing data
 dat <- read.csv("./Sequences.csv")
 ```
 
-Determining the number of each base pair in each sequence
+Determining the number of each base pair in each sequence and printing it our as a table
 ```{r}
 num_nucleo <- c()
 bp <- rep(c("A", "T", "C", "G"), 3)
@@ -27,7 +27,7 @@ seq <- c(rep("Sequence 1", 4), rep("Sequence 2", 4), rep("Sequence 3", 4))
 
 count <- 1
 
-for (i in length(dat)) {
+for (i in 1:3) { #creating for loop that counts the number of base pairs in each sequence
 
 num_nucleo <- c(num_nucleo, nchar(gsub("[^A]", "", dat$Sequence[count])))
 num_nucleo <- c(num_nucleo, nchar(gsub("[^T]", "", dat$Sequence[count])))
@@ -38,11 +38,33 @@ count <- count + 1
 
 }
 
-
+seq_bp_count <- data.frame(seq, bp, num_nucleo) #Arranging data frame
+print(seq_bp_count) #Printing table with sequence number and base pair number
 ```
 
+Printing each sequence
+```{r}
+print(dat$Sequence)
+```
+
+Calculating the percent GC content of each sequence
+```{r}
+num_GC <- seq_bp_count %>% #calculating the number of GC base pairs in each sequence
+  group_by(seq) %>%
+  filter(bp %in% c("G", "C")) %>%
+  summarize(GC = sum(num_nucleo))
+
+tot_bp <- seq_bp_count %>% #Calculating the total number of base pairs in each sequence
+  group_by(seq) %>%
+  summarize(bp = sum(num_nucleo))
+
+(GC_content <- (num_GC$GC / tot_bp$bp) * 100) #Calculating GC content in percent
+(GC_content <- sub("(\\d{2}).+", "\\1%", GC_content)) #Adding percent symbol to GC content
+(seq_id <- gsub("[^H*]", "", dat$Name))
+print(data.frame(num_GC$seq, GC_content))
+```
 
 ```{r}
-num_nucleo <- nchar(c(num_nucleo, gsub("[^A]", "", seq)))
+
 ```
 
